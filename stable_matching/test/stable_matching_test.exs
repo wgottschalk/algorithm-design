@@ -3,30 +3,49 @@
   alias StableMatching.Item
   doctest StableMatching
 
-  setup do
-    preferences = [ {[1, 0], 0}, {[0, 1], 1} ]
-    group_a = Enum.map preferences, fn ({pref, id}) ->
-      %Item{ id: id, type: "man", preferences: pref}
+    defp generateItems(preferences, type) do
+      Enum.map preferences, fn ({pref, id}) ->
+        %Item{ id: id, type: type, preferences: pref}
+      end
     end
 
-    group_b = Enum.map preferences, fn ({pref, id}) ->
-      %Item{ id: id, type: "woman", preferences: pref}
+    test "everyone gets match with ideal preferences" do
+      preferences = [ {[1, 0], 0}, {[0, 1], 1} ]
+      group_a = generateItems(preferences, "man")
+      group_b = generateItems(preferences, "woman")
+
+      expected_result = [
+        {
+          %Item{id: 1, type: "man", preferences: [0, 1]},
+          %Item{id: 1, type: "woman", preferences: [0, 1]}
+        },
+        {
+          %Item{id: 0, type: "man", preferences: [1, 0]},
+          %Item{id: 0, type: "woman", preferences: [1, 0]}
+        }
+      ]
+
+      assert StableMatching.match(group_a, group_b) == expected_result
     end
 
-    {:ok, %{group_a: group_a, group_b: group_b}}
-  end
+    test "forms a stable match when preferences are not aligned" do
+      preferences_for_group_a = [ {[1, 0], 0}, {[0, 1], 1} ]
+      preferences_for_group_b = [ {[0, 1], 0}, {[1, 0], 1} ]
+      group_a = generateItems(preferences_for_group_a, "man")
+      group_b = generateItems(preferences_for_group_b, "woman")
 
-  test "everyone gets match with ideal preferences", %{group_a: group_a, group_b: group_b} do
-    expected_result = [
-      {
-        %Item{id: 1, type: "man", preferences: [0, 1]},
-        %Item{id: 1, type: "woman", preferences: [0, 1]}
-      },
-      {
-        %Item{id: 0, type: "man", preferences: [1, 0]},
-        %Item{id: 0, type: "woman", preferences: [1, 0]}
-      }
-    ]
+      expected_result = [
+        {
+          %Item{id: 1, type: "man", preferences: [0, 1]},
+          %Item{id: 1, type: "woman", preferences: [1, 0]}
+        },
+        {
+          %Item{id: 0, type: "man", preferences: [1, 0]},
+          %Item{id: 0, type: "woman", preferences: [0, 1]}
+        }
+      ]
+
     assert StableMatching.match(group_a, group_b) == expected_result
   end
+
 end
