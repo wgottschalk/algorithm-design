@@ -1,8 +1,9 @@
-module.exports = function match (groupA, groupB) {
+module.exports = function match (groupA) {
   const matches = new Map();
   while (matches.size !== groupA.length) {
     groupA.forEach( item => {
       if (item.isMatched) return;
+      
       const highestMatch = item.popHighestPreference()
 
       // if the item's first choice is available, then match them!
@@ -16,6 +17,8 @@ module.exports = function match (groupA, groupB) {
       // then break the current match and reassign it.
         const itemMatch = highestMatch.getHighestPreference()
         if (item === itemMatch) {
+          const oldItem = matches.get(highestMatch)
+          oldItem.isMatched = false;
           item.isMatched = true;
           matches.set(highestMatch, item)
         } else {
