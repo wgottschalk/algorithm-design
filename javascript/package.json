@@ -1,0 +1,16 @@
+{
+  "name": "algorithm_design",
+  "version": "1.0.0",
+  "description": "Algorithms in Javascript from the book Algorithm Design",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/.bin/mocha tests --require ./tests/helpers/chai.js",
+    "mocha": "./node_modules/.bin/mocha --require ./tests/helpers/chai.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^2.5.3"
+  }
+}

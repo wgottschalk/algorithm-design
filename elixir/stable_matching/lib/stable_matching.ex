@@ -8,7 +8,7 @@ defmodule StableMatching do
   def match([ person_a | rest_a ], group_b) do
     person_b = person_a |> find_highest_match(group_b)
 
-    match(rest_a, group_b, [{person_a, person_b}])
+    match(rest_a, group_b, Map.put(%{}, person_a, person_b) )
   end
 
   def match([], _group_b, matches) do
@@ -17,7 +17,13 @@ defmodule StableMatching do
 
   def match([ person_a | rest_a ], group_b, matches) do
     person_b = person_a |> find_highest_match(group_b)
-    match(rest_a, group_b, [{person_a, person_b} | matches])
+    cond do
+      !person_b.matched ->
+        match(rest_a, group_b, Map.put(matches, person_a, person_b) )
+
+
+
+    end
   end
 
   defp find_highest_match(person, group) do

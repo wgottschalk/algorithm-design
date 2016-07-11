@@ -9,6 +9,7 @@ defmodule StableMatching.Preferences do
 
     Examples:
 
-    item = 
+    item =
   """
+
 end
