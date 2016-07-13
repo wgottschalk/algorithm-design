@@ -3,8 +3,18 @@ class Item {
     this.name = name;
     this.isMatched = false;
     this.preferences = new Map();
+    this.matchStrength = 1000
   }
 
+  prefers(item) {
+    this.preferences.set(item, this.matchStrength);
+    this.matchStrength -= 1;
+    return this;
+  }
+  over(item) {
+    this.prefers(item);
+    return this;
+  }
   getPreferences() {
     return this.preferences.entries();
   }
