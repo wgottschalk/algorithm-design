@@ -6,15 +6,6 @@ class Item {
     this.matchStrength = 1000
   }
 
-  prefers(item) {
-    this.preferences.set(item, this.matchStrength);
-    this.matchStrength -= 1;
-    return this;
-  }
-  over(item) {
-    this.prefers(item);
-    return this;
-  }
   getPreferences() {
     return this.preferences.entries();
   }
@@ -31,11 +22,20 @@ class Item {
     const item = highest[0]
     return item;
   }
+
   popHighestPreference() {
     const item = this.getHighestPreference()
     this.preferences.delete(item);
     return item;
   }
+
+  over(item){ return this.prefers(item) }
+  prefers(item) {
+    this.preferences.set(item, this.matchStrength);
+    this.matchStrength -= 1;
+    return this;
+  }
+
 }
 
 module.exports = Item;
