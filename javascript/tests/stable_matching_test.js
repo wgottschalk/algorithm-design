@@ -5,10 +5,12 @@ describe("stable matching algorithm tests", function() {
   beforeEach( function() {
     this.alan = new Item("alan");
     this.betty = new Item("betty");
+    this.chad = new Item("chad")
     this.students = [this.alan, this.betty]
 
     this.google = new Item("google");
     this.facebook = new Item("facebook");
+    this.uber = new Item("uber")
     this.companies = [this.google, this.facebook]
   })
 
@@ -66,5 +68,21 @@ describe("stable matching algorithm tests", function() {
     const matches = match(this.students)
     expect(matches.get(google)).to.be.equal(alan)
     expect(matches.get(facebook)).to.be.equal(betty)
+  })
+
+  it("swaps matches properly when there is more than one preference to be swapped", function() {
+    const {alan, betty, chad, google, facebook, uber} = this
+    alan.prefers(google).over(facebook).over(uber)
+    betty.prefers(google).over(facebook).over(uber)
+    chad.prefers(google).over(facebook).over(uber)
+
+    google.prefers(chad).over(betty).over(alan)
+    facebook.prefers(chad).over(betty).over(alan)
+    uber.prefers(chad).over(betty).over(alan)
+
+    const matches = match([alan, betty, chad])
+    expect(matches.get(google)).to.be.equal(chad)
+    expect(matches.get(facebook)).to.be.equal(betty)
+    expect(matches.get(uber)).to.be.equal(alan)
   })
 })
