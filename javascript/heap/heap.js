@@ -58,15 +58,10 @@ function Heap (comparator = (a, b) => a - b) {
         this._swap(index, minIdx)
         this._bubbleDown(minIdx)
       }
-
     },
     heapsort(array) {
       array.forEach( node => this.insert(node))
-      const sorted = []
-      for (let i = 0; i < array.length; i++) {
-        sorted.push(this.extractMin())
-      }
-      return sorted
+      return this.heap.map( this.extractMin.bind(this) )
     }
   }
 
