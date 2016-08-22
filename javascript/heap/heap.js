@@ -1,30 +1,24 @@
 function Heap (comparator = (a, b) => a - b) {
-    Object.defineProperty(this, 'size', {
-      get: function() {return this._heap.length - 1}
-    })
-    Object.defineProperty(this, 'heap', {
-      get: function() {return this._heap.slice(1)}
-    })
     Object.defineProperty(this, 'min', {
-      get: function() {return this._heap.slice(1)[0]}
+      get: function() {return this._heap[0]}
     })
     this.comp = comparator
-    this._heap = [null]
+    this._heap = []
   }
 
   Heap.prototype = {
-    parentIndex(index) {return index >> 1},
-    leftIndex(index)   {return index << 1},
-    rightIndex(index)  {return (index << 1) + 1},
+    parentIndex(index) {return (index - 1 ) >> 1},
+    leftIndex(index)   {return (index << 1) + 1},
+    rightIndex(index)  {return (index << 1) + 2},
     insert(element) {
       this._heap.push(element)
-      this._bubbleUp(this.size)
+      this._bubbleUp(this._heap.length - 1)
       return this
     },
     _bubbleUp(childIndex) {
       const parentIdx = this.parentIndex(childIndex)
       if (this.comp(this._heap[parentIdx], this._heap[childIndex]) > 0
-          && childIndex > 1) {
+      &&  childIndex > 0) {
         this._swap(parentIdx, childIndex)
         this._bubbleUp(parentIdx)
       }
@@ -36,21 +30,23 @@ function Heap (comparator = (a, b) => a - b) {
     },
     extractMin() {
       const min = this.min
-      this._heap[1] = this._heap.pop()
-      this._bubbleDown(1)
+      this._heap[0] = this._heap.pop()
+      this._bubbleDown()
       return min
     },
-    _bubbleDown(index) {
+    _bubbleDown(index = 0) {
       const leftIdx = this.leftIndex(index)
       const rightIdx = this.rightIndex(index)
       let minIdx
 
-      if (this.comp(this._heap[index], this._heap[leftIdx]) > 0 ) {
+      if (this.comp(this._heap[index], this._heap[leftIdx]) > 0
+      &&  leftIdx <= this._heap.length) {
         minIdx = leftIdx
       }
 
       if (this.comp(this._heap[index], this._heap[rightIdx]) > 0
-      &&  this.comp(this._heap[leftIdx], this._heap[rightIdx]) > 0) {
+      &&  this.comp(this._heap[leftIdx], this._heap[rightIdx]) > 0
+      &&  rightIdx <= this._heap.length) {
         minIdx = rightIdx
       }
 
@@ -60,8 +56,8 @@ function Heap (comparator = (a, b) => a - b) {
       }
     },
     heapsort(array) {
-      array.forEach( node => this.insert(node))
-      return this.heap.map( this.extractMin.bind(this) )
+      array.forEach( node => this.insert(node) )
+      return this._heap.slice(0).map( this.extractMin.bind(this) )
     }
   }
 
