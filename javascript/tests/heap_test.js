@@ -63,5 +63,16 @@ describe("heap", () => {
       expect(this.h.heapsort([5,4,3,6,7,2,1,8,9,0]))
         .to.eql([0,1,2,3,4,5,6,7,8,9])
     })
+    it("heapsorts nodes", () => {
+      const nodeHeap = new Heap( (nodeA, nodeB) => nodeA.value - nodeB.value )
+      function Node(val, name) {
+        this.value = val
+        this.name = name
+      }
+      const values = [[5, 'a'], [1, 'b'],[3, 'c'],[8, 'd'],[4, 'e'],[2, 'f'],[0, 'g'],[9, 'h']]
+      const nodes = values.map( ([value, name]) => new Node(value, name))
+      const sorted = nodeHeap.heapsort(nodes)
+      expect(sorted).to.eql( nodes.sort( (a, b) => a.value - b.value) )
+    })
   })
 })
