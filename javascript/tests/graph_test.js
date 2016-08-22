@@ -7,7 +7,7 @@ describe("graphs", () => {
 
   it("tests the properties on a graph", () => {
     expect(this.g).to.have.property("isDirected", false)
-    expect(this.g).to.have.property("adjMatrix")
+    expect(this.g).to.have.property("adjList")
 
     const directedG = new Graph({isDirected: true})
     expect(directedG).to.have.property("isDirected", true)
@@ -15,14 +15,14 @@ describe("graphs", () => {
 
   it("#addNode", () => {
     this.g.addNode('a').addNode('b')
-    expect(this.g.adjMatrix).to.have.all.keys(['a', 'b'])
+    expect(this.g.adjList).to.have.all.keys(['a', 'b'])
   })
 
   it("#addEdge", () => {
     const {g} = this;
     g.addNode('a').addNode('b').addEdge('a', 'b')
     g.addEdge('c', 'd', 2)
-    expect(g.adjMatrix).to.eql({
+    expect(g.adjList).to.eql({
       a: {b: 1},
       b: {a: 1},
       c: {d: 2},
@@ -31,7 +31,7 @@ describe("graphs", () => {
 
     const dag = new Graph({isDirected: true})
     dag.addEdge('a', 'b')
-    expect(dag.adjMatrix).to.eql({a: {b: 1}, b: {}})
+    expect(dag.adjList).to.eql({a: {b: 1}, b: {}})
   })
 
   it("#getNeighbors", () => {
