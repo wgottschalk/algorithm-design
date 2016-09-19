@@ -1,3 +1,6 @@
+function exists(value) {
+  return value !== null || value !== undefined
+}
 module.exports = class Graph {
   constructor({isDirected} = {isDirected: false}) {
     this.isDirected = isDirected
@@ -12,7 +15,7 @@ module.exports = class Graph {
 
   addEdge(nodeA, nodeB, weight = 1){
     if (nodeA === nodeB) throw new Error('must be connected to different verticies')
-    if (!nodeA || !nodeB) throw new Error('must give to nodes')
+    if (!exists(nodeA) || !exists(nodeB)) throw new Error('must provide 2 nodes')
     if (!this.adjList[nodeA]) this.addNode(nodeA)
     if (!this.adjList[nodeB]) this.addNode(nodeB)
 
