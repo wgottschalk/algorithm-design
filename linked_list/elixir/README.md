@@ -1,4 +1,4 @@
-# StableMatching
+# LinkedList
 
 **TODO: Add description**
 
@@ -6,19 +6,19 @@
 
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed as:
 
-  1. Add `stable_matching` to your list of dependencies in `mix.exs`:
+  1. Add `linked_list` to your list of dependencies in `mix.exs`:
 
     ```elixir
     def deps do
-      [{:stable_matching, "~> 0.1.0"}]
+      [{:linked_list, "~> 0.1.0"}]
     end
     ```
 
-  2. Ensure `stable_matching` is started before your application:
+  2. Ensure `linked_list` is started before your application:
 
     ```elixir
     def application do
-      [applications: [:stable_matching]]
+      [applications: [:linked_list]]
     end
     ```
 

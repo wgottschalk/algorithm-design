@@ -1,8 +1,8 @@
-defmodule StableMatching.Mixfile do
+defmodule LinkedList.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :stable_matching,
+    [app: :linked_list,
      version: "0.1.0",
      elixir: "~> 1.3",
      build_embedded: Mix.env == :prod,

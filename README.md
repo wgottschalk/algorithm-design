@@ -1,4 +1,3 @@
 # algorithm-design
-A repo that implements the algorithms in Algorithm Design in Elixir
+A repo that implements the algorithms in Algorithm Design in different languages
 
-Day 1: Stable Matching Problems

@@ -10,11 +10,11 @@ use Mix.Config
 
 # You can configure for your application as:
 #
-#     config :stable_matching, key: :value
+#     config :linked_list, key: :value
 #
 # And access this configuration in your application as:
 #
-#     Application.get_env(:stable_matching, :key)
+#     Application.get_env(:linked_list, :key)
 #
 # Or configure a 3rd-party app:
 #
